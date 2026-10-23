@@ -1,0 +1,14 @@
+[
+ 
+  {
+    "context": "Workspace",
+    "bindings": {
+      "shift-space": [
+        "task::Spawn",
+        {
+          "task_name": "r/python"
+        }
+      ],
+    }
+  }
+]

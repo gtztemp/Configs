@@ -1,0 +1,55 @@
+[window]
+opacity = 0.9  # 1.0 opaque, 0.0 fully transparent (requires compositor)
+padding = { x = 10, y = 10 }
+
+[window.dimensions]
+columns = 120
+lines = 40
+
+[font]
+size = 12
+
+[cursor.style]
+shape = "Beam"
+blinking = "On"
+
+
+[selection]
+save_to_clipboard = true
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control"
+action = "Paste"
+
+[colors.primary]
+background = "0x202020"
+foreground = "0xf8f8f2"
+
+[colors.cursor]
+text = "0x282a36"
+cursor = "0xf8f8f2"
+
+[colors.selection]
+text = "0x282a36"
+background = "0x44475a"
+
+[colors.normal]
+black   = "0x21222c"
+red     = "0xff5555"
+green   = "0x50fa7b"
+yellow  = "0xf1fa8c"
+blue    = "0xbd93f9"
+magenta = "0xff79c6"
+cyan    = "0x8be9fd"
+white   = "0xbfbfbf"
+
+[colors.bright]
+black   = "0x4d4d4d"
+red     = "0xff6e6e"
+green   = "0x69ff94"
+yellow  = "0xffffa5"
+blue    = "0xd6acff"
+magenta = "0xff92df"
+cyan    = "0xa4ffff"
+white   = "0xffffff"

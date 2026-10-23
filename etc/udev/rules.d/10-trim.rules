@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="scsi_disk", ATTRS{idVendor}=="174c", ATTRS{idProduct}=="55aa", ATTR{provisioning_mode}="unmap"
+ACTION=="change", SUBSYSTEM=="scsi_disk", ATTRS{idVendor}=="174c", ATTRS{idProduct}=="55aa", ATTR{provisioning_mode}="unmap"

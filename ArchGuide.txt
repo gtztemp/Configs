@@ -1,0 +1,57 @@
+Update the entire system -
+
+    sudo pacman -Syu
+
+Search for an installed package -
+
+    pacman -Q | grep package
+    
+List explicitly installed packages -
+
+    pacman -Qe
+ 
+List foreign/AUR packages -  
+
+    pacman -Qm
+
+Remove packages -
+
+    sudo pacman -Rns gnome-software epiphany vim gnome-maps htop gnome-tour gnome-music gnome-contacts simple-scan
+
+Remove orphaned packages -
+    
+    pacman -Qtdq
+    
+    sudo pacman -Rns $(pacman -Qtdq)
+
+Clear package cache -
+
+    sudo pacman -Scc
+
+Mirror list -
+    
+    Config file: /etc/pacman.d/mirrorlist
+
+Install Essential Applications -
+
+    sudo pacman -S --needed base-devel power-profiles-daemon ntfs-3g file-roller fish git openssh ripgrep rsync blanket btop extension-manager firefox iotas lm_sensors mpv helix zed code 7zip transmission-gtk foliate amberol resources
+
+Change cursor size -
+
+    gsettings set org.gnome.desktop.interface cursor-size 22
+    
+CPU Microcode Setup -
+
+    sudo pacman -S --needed intel-ucode amd-ucode
+
+    Edit mkinitcpio configuration
+        
+    sudo nano /etc/mkinitcpio.conf
+    
+    Keep your existing hooks and ensure microcode comes before autodetect.
+
+    Example: HOOKS=(base udev microcode autodetect modconf kms keyboard keymap consolefont block filesystems fsck)
+
+    Rebuild initramfs
+
+    sudo mkinitcpio -P

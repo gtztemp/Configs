@@ -1,0 +1,120 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+
+{
+    "disable_ai": true,
+
+    "terminal": {
+        "dock": "bottom",
+        "font_family": "MonoLisa",
+        "max_scroll_history_lines": 5000,
+
+        "detect_venv": {
+            "on": {
+                "directories": [".venv"],
+                "activate_script": "fish"
+            }
+        }
+    },
+
+    "git_panel": {
+        "dock": "left",
+    },
+
+    "project_panel": {
+        "dock": "left",
+    },
+
+    "git": {
+        "inline_blame": {
+            "enabled": false,
+        },
+    },
+
+    "telemetry": {
+        "diagnostics": false,
+        "metrics": false,
+        "anthropic_retention": false,
+    },
+
+    "session": {
+        "trust_all_worktrees": true,
+    },
+
+    "base_keymap": "VSCode",
+
+    "icon_theme": "JetBrains New UI Icons (Dark)",
+
+    "theme": {
+        "mode": "dark",
+        "light": "One Light",
+        "dark": "One Dark Pro Glass",
+    },
+
+    "ui_font_size": 16,
+    "buffer_font_size": 15,
+    "buffer_font_family": "MonoLisa",
+
+    "tab_size": 4,
+
+    // "colorize_brackets": true,
+    "show_signature_help_after_edits": true,
+
+    "inlay_hints": {
+        "enabled": true,
+        "show_other_hints": true,
+        "show_parameter_hints": false,
+        "show_type_hints": false,
+        "show_value_hints": true,
+    },
+
+    // "wrap_guides": [88],
+
+    "autosave": {
+        "after_delay": {
+            "milliseconds": 500,
+        },
+    },
+
+    "format_on_save": "on",
+
+    "restore_on_startup": "last_session",
+
+    "show_completions_on_input": true,
+
+    "edit_predictions": {
+        "provider": "none",
+    },
+
+    "soft_wrap": "editor_width",
+
+    "remove_trailing_whitespace_on_save": true,
+    "ensure_final_newline_on_save": true,
+
+    "languages": {
+        "Python": {
+            "language_servers": [
+                "ty",
+                "ruff",
+                "!basedpyright"
+            ],
+
+            "formatter": {
+                "language_server": {
+                    "name": "ruff"
+                }
+            },
+
+            "code_actions_on_format": {
+                "source.fixAll.ruff": true,
+                "source.organizeImports.ruff": true
+            }
+        }
+    }
+}

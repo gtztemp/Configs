@@ -1,0 +1,39 @@
+remove unwanted apps
+
+fix sources by /etc/apt/sources.list.bak then creating /etc/apt/sources.list.d/debian.sources
+fix apt.conf.d to stop recommending unnecessary installs
+
+sudo apt install --no-install-recommends <package name> (to not install unwanted apps)
+
+sudo apt install gnome-shell-extension-manager gir1.2-gtop-2.0 lm-sensors alacritty blanket iotas libavcodec-extra fonts-noto-core  fonts-noto-ui-core systemd-zram-generator mpv ytdlp amberol gimp libgts-bin gimp-data-extras  gimp-help-en kdenlive obs-studio frei0r-plugins obs-plugins swh-plugins qt6-gtk-platformtheme 
+
+#### Development ####
+    sudo apt install build-essential git curl pkg-config cmake gdb ninja-build openssh-client ca-certificates python3 python3-pip python3-venv python3-dev pipx
+
+
+#### If missing firmware amd or intel #### 
+    sudo apt install firmware-amd-graphics firmware-intel-graphics
+
+gsettings set org.gnome.desktop.interface cursor-size 20 
+
+#### Better dark support for legacy apps ####
+    sudo apt install gnome-themes-extra
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+
+#### To list .deb packages #### 
+    apt list '~o' 2>/dev/null
+
+Installed as .deb -
+    sudo dpkg -i ./filename
+    Helix, Code, Anydesk, Helium, Brave, nautilus-extension-any-terminal , HushMic
+
+Installed as .tar.gz, Firefox
+
+#### For VM ####
+    sudo apt install qemu-utils qemu-system-modules-spice ovmf
+    sudo apt install spice-vdagent qemu-guest-agent (inside debian and kali)
+    
+####AppImage####
+    sudo apt install libfuse2
+    
+update-desktop-database ~/.local/share/applications

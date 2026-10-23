@@ -1,0 +1,337 @@
+# Fedora Fresh Installation — Post-Install Checklist
+
+## 1\. Remove Bloat
+
+
+	AMD System — Check Hardware and Unneeded Intel Packages
+	Check installed graphics and audio hardware:
+
+	```
+		lspci | grep -Ei 'vga|3d|display|audio'
+
+	```
+
+	Preview removal of the following Intel- and NVIDIA-related packages:
+
+	```
+		sudo dnf remove --assumeno intel-gmmlib intel-mediasdk intel-lpmd intel-vpl-gpu-rt libva-intel-media-driver intel-gpu-firmware intel-audio-firmware intel-vsc-firmware nvidia-gpu-firmware
+	
+	```
+
+	sudo dnf remove flatpak
+	
+	sudo dnf group remove libreoffice --assumeno
+	sudo dnf remove $( rpm -qa | grep libreoffice ) --assumeno
+
+
+## 2\. Configure DNF
+
+
+	Edit the DNF configuration:
+	```
+		sudo nano /etc/dnf/dnf.conf
+	```
+	Add or update the following settings:
+	```
+		max_parallel_downloads=10
+	```
+
+## 3\. Fully Update the System
+
+	Preview available updates:
+	```
+		sudo dnf up --refresh --assumeno
+	```
+	Download and install updates offline:
+	```
+		sudo dnf up --offline -y
+		sudo dnf offline reboot -y
+	```
+	Optional cleanup (usually unnecessary):
+	```
+		sudo dnf offline clean
+	```
+
+## 4\. Enable RPM Fusion and Multimedia Codecs
+
+
+	# Follow the official RPM Fusion multimedia guide:
+		
+		https://rpmfusion.org/Howto/Multimedia
+		
+	# Add repo -
+		
+		sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+		
+		sudo dnf update @core
+		sudo dnf install rpmfusion-\*-appstream-data
+		
+		sudo dnf swap ffmpeg-free ffmpeg --allowerasing
+		sudo dnf install @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+		
+	# Codec -	
+		
+		sudo dnf install intel-media-driver
+		sudo dnf install mesa-va-drivers-freeworld
+		sudo dnf swap mesa-vulkan-drivers{,-freeworld}
+		
+	# If using i686 compat libraries (for steam or alikes):
+
+		sudo dnf install mesa-va-drivers-freeworld.i686
+		sudo dnf swap mesa-vulkan-drivers{,-freeworld}.i686
+		
+	
+## 5\. Install GNOME Utilities and other software
+
+	```
+		sudo dnf install fish gnome-extensions-app file-roller gnome-tweaks fuse-libs rsync transmission-gtk mpv g4music foliate 
+		
+		sudo dnf copr enable imput/helium -y
+		sudo dnf install helium-bin -y
+		
+	```
+
+
+## 6\. Install Development Tools
+
+
+	Install the development tools group:
+
+	```
+		sudo dnf install @development-tools
+	```
+
+	Install additional tools for a Helix setup:
+
+	```
+		sudo dnf install ty ruff clang-tools-extra
+	```
+
+## 7\. Install Gaming Tools
+
+	```
+		sudo dnf install mangohud goverlay lm_sensors
+	```
+	
+	CS2 Launch options - SDL_VIDEODRIVER=wayland SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY=1 LD_PRELOAD="" mangohud %command% -fullscreen
+
+
+
+## 8\. Clean
+
+	```
+		sudo dnf autoremove
+		sudo dnf clean all
+	```
+
+## 9\. Disable or Remove Unwanted Repositories
+
+	```
+		/etc/yum.repos.d/
+	```
+
+	Review the `.repo` files and disable or remove repositories you no longer need.
+
+## 10\. GNOME Customization
+
+	Make Ptyxis Transparent
+
+	Set terminal opacity to `0.9`:
+
+	```
+		dconf write /org/gnome/Ptyxis/Profiles/$(dconf read /org/gnome/Ptyxis/default-profile-uuid | tr -d "'")/opacity 0.9
+	```
+
+	### Set Cursor Size
+
+	Set the cursor size to `22`:
+
+	```
+		gsettings set org.gnome.desktop.interface cursor-size 22
+	```
+
+	### Auto-Hide the GRUB Menu
+
+	```
+		sudo grub2-editenv - set menu_auto_hide=1
+	```
+
+	### Enable Legacy GTK Theme Support
+
+	Install the Adwaita GTK 3 theme:
+
+	```
+		sudo dnf install adw-gtk3-theme
+	```
+
+	Set the dark theme:
+
+	```
+		gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
+	```
+
+## 11\. PATH Configuration
+
+	Check the current PATH:
+
+	```
+		echo $PATH
+	```
+
+	Add `~/.local/bin` to the Fish shell PATH:
+
+	```
+		fish_add_path ~/.local/bin
+	```
+
+	### Link an AppImage System-Wide for the Current User
+
+	Create a symbolic link to an AppImage:
+
+	```
+		ln -s ~/AppImages/name.appimage ~/.local/bin/name
+	```
+
+	Replace `name.appimage` with the actual AppImage filename and `name` with the command you want to use.
+
+	Ensure the AppImage is executable if necessary:
+
+	```
+		chmod +x ~/AppImages/name.appimage
+	```
+
+## 12\. Reset the System Journal Logs
+
+	List available boots:
+
+	```
+		journalctl --list-boots
+	```
+
+	Rotate the journal files:
+
+	```
+		sudo journalctl --rotate
+	```
+
+	Remove archived journal files older than one second:
+
+	```
+		sudo journalctl --vacuum-time=1s
+	```
+
+	List boots again:
+
+	```
+		journalctl --list-boots
+	```
+
+	**Note:** This is an aggressive log cleanup procedure. It removes archived logs, but active journal files may still contain entries.
+
+---
+
+# System Maintenance
+
+## 13\. Perform a Fedora System Upgrade
+
+	First, update the current Fedora release:
+
+	```
+		sudo dnf upgrade --refresh
+		sudo reboot
+	```
+
+	Download packages for the target release (example: Fedora 45):
+
+	```
+		sudo dnf system-upgrade download --releasever=45
+	```
+
+	Once the download and dependency checks complete, initiate the offline upgrade:
+
+	```
+		sudo dnf offline reboot
+	```
+
+	After the upgrade, clean up offline upgrade data if necessary:
+
+	```
+		sudo dnf offline clean
+	```
+
+	**Important:** Replace `45` with the intended target release. Check Fedora's supported upgrade paths and release status before upgrading.
+
+## 14\. Clean Up Retired Packages
+
+	Install the retired-package cleanup utility:
+
+	```
+		sudo dnf install remove-retired-packages
+	```
+
+	Run it:
+
+	```
+		remove-retired-packages
+	```
+
+	Review its proposed removals carefully.
+
+## 15\. Find and Remove Duplicate Packages
+
+	List duplicate packages:
+
+	```
+		sudo dnf repoquery --duplicates
+	```
+
+	Remove duplicates:
+
+	```
+		sudo dnf remove --duplicates
+	```
+
+	Review the transaction before confirming.
+
+## 16\. Find Packages No Longer Available in Repositories
+
+	For packages from official repositories, the latest available version should normally be installed. Some installed packages may no longer exist in any enabled repository.
+
+	List extra packages:
+
+	```
+		sudo dnf list --extras
+	```
+
+	If you identify packages you no longer need, remove them with:
+
+	```
+		sudo dnf remove $(sudo dnf repoquery --extras --exclude=kernel,kernel-\*,kmod-\*)
+	```
+
+	Review the proposed transaction before confirming. Do not blindly remove packages simply because they appear as extras; they may be intentionally installed from third-party sources.
+
+## 17\. Remove Unneeded Dependencies
+
+	Remove packages that are no longer required by installed software:
+
+	```
+		sudo dnf autoremove
+	```
+
+	Review the package list before proceeding.
+
+## 18\. Disable Gnome Software from Startup Apps
+
+    Gnome software autostarts on boot, this takes at least 100MB of RAM upto 900MB, you can stop it from autostarting by:
+    
+		mkdir -p ~/.config/autostart
+    
+		cp /usr/share/applications/org.gnome.Software.desktop ~/.config/autostart/
+    
+		echo "X-GNOME-Autostart-enabled=false" >> ~/.config/autostart/org.gnome.Software.desktop
+    
+    GNOME Software is also triggered in the background whenever you search in the GNOME overview. To prevent this, disable it as a search provider:
+    
+		dconf write /org/gnome/desktop/search-providers/disabled "['org.gnome.Software.desktop']"
+

@@ -1,0 +1,1 @@
+ab=128k acodec=aac ar=48000 channels=2 f=mp4 movflags=+faststart qp_b=20 qp_i=20 qp_p=20 rc=cqp real_time=-1 threads=0 vcodec=h264_amf vq=20

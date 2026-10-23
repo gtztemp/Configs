@@ -1,0 +1,34 @@
+# =========================
+# Python
+# =========================
+
+[[language]]
+name = "python"
+scope = "source.python"
+file-types = ["py", "pyi"]
+roots = [
+    "pyproject.toml",
+    "setup.py",
+    "setup.cfg",
+    "requirements.txt",
+    ".git"
+]
+language-servers = ["ty", "ruff"]
+formatter = { command = "ruff", args = ["format", "-"] }
+
+
+# =========================
+# C
+# =========================
+
+[[language]]
+name = "c"
+scope = "source.c"
+file-types = ["c", "h"]
+roots = [
+    "Makefile",
+    "CMakeLists.txt",
+    ".git"
+]
+language-servers = ["clangd"]
+formatter = { command = "clang-format", args = ["--assume-filename", "file.c"] }

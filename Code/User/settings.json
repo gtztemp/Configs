@@ -1,0 +1,65 @@
+{
+    // Appearance
+    "workbench.colorTheme": "One Monokai Darker",
+    "workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-dark",
+    "workbench.productIconTheme": "fluent-icons",
+    "editor.fontFamily": "'MonoLisa','Droid Sans Mono', monospace",
+    "editor.mouseWheelZoom": true,
+    "editor.minimap.enabled": false,
+    // General editing
+    "files.autoSave": "afterDelay",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.suggestSelection": "first",
+    // AI / telemetry
+    "chat.disableAIFeatures": true,
+    "telemetry.feedback.enabled": false,
+    // Terminal
+    "terminal.integrated.enablePersistentSessions": false,
+    "terminal.integrated.fontFamily": "'MonoLisa'",
+    "terminal.integrated.scrollback": 5000,
+    // Python
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.indexing": true,
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    // Ruff
+    "ruff.nativeServer": "auto",
+    "ruff.logLevel": "info",
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
+    // Jupyter notebooks
+    "notebook.formatOnSave.enabled": true,
+    "notebook.codeActionsOnSave": {
+        "notebook.source.fixAll": "explicit",
+        "notebook.source.organizeImports": "explicit"
+    },
+    // JSON / Markdown cleanup
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[markdown]": {
+        "editor.wordWrap": "on"
+    },
+    // Better suggestions
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "terminal.integrated.mouseWheelZoom": true,
+    "terminal.integrated.persistentSessionReviveProcess": "never",
+    "terminal.integrated.hideOnStartup": "always",
+    "explorer.confirmDelete": false,
+    "update.mode": "none",
+    "editor.fontSize": 16
+}

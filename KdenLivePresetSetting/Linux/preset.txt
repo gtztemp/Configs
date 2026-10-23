@@ -1,0 +1,1 @@
+ab=128k acodec=aac ar=48000 channels=1 f=mp4 movflags=+faststart real_time=-1 threads=0 vcodec=h264_vaapi vglobal_quality=20 vq=20

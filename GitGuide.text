@@ -1,0 +1,167 @@
+# ─────────────────────────────────────────
+# Git Setup on a Fresh PC
+# ─────────────────────────────────────────
+
+    git config --global user.name "gtztemp"
+    git config --global user.email "gaurav.rockins@gmail.com"
+    git config --global core.fileMode false
+    git config --global init.defaultBranch main
+    git config --global credential.helper store
+    git config --global alias.sync '!git add -A && (git commit -m "synced" || true) && git push'
+    
+
+# ─────────────────────────────────────────
+# Workflow 1: Clone an Existing Repo
+# ─────────────────────────────────────────
+
+# Via HTTPS (Personal Access Token required)
+    git clone https://github.com/gtztemp/Workspace.git
+
+# OR via SSH (if SSH keys are configured)
+    git clone git@github.com:gtztemp/Workspace.git
+
+    cd Workspace
+    git status
+
+# Make edits, then:
+    git sync
+
+# ─────────────────────────────────────────
+# Workflow 2: New Folder -> New GitHub Repo
+# ─────────────────────────────────────────
+
+# 1. Create a repository on github.com (empty, no README / .gitignore)
+
+# 2. In your local folder:
+    git init
+
+# Choose one remote protocol:
+    git remote add origin https://github.com/gtztemp/reponame.git
+# OR
+    git remote add origin git@github.com:gtztemp/reponame.git
+
+# Add files & track
+    git add .
+    git commit -m "initial commit"
+    git push -u origin main
+
+# ─────────────────────────────────────────
+# Workflow 3: Connect Existing Local Folder to Existing GitHub Repo
+# ─────────────────────────────────────────
+
+    cd path/to/local/folder
+    
+    git status
+    git remote -v
+    git branch -M main (if not main already)
+    
+#If working tree is clean
+# Pull any changes from GitHub, then verify upstream push tracking
+    
+    git pull origin main
+    git push -u origin main
+
+#If working tree is dirty
+
+    # Option A: Standard commit + rebase
+
+        git add -A
+        git commit -m "synced"
+        git pull --rebase origin main
+        git push -u origin main
+            
+    # Option B: Re-align to remote history first (keeps all your edits unstaged)
+    # Use this if you made messy local edits/commits and want a fresh commit on top of GitHub
+        
+        git fetch origin
+        git reset --mixed origin/main
+        git add -A
+        git commit -m "synced changes on top of main"
+        git push -u origin main
+    
+# If this local folder was initialized separately with git init and has its own commit history completely disconnected from GitHub, --rebase or standard pull might reject it (fatal: refusing to merge unrelated histories).
+
+    git pull origin main --allow-unrelated-histories -m "Merge local and remote histories"
+    git push -u origin main
+
+
+##################################################################################################################
+
+
+// on another pc
+		
+		git status
+    
+	# If there are no local changes: nothing to commit, working tree clean
+		
+		git pull
+	
+	#If there are local changes you DON'T care about:
+		
+		git fetch origin
+		git reset --hard origin/main
+		git sync
+
+# ─────────────────────────────────────────
+# SSH setup
+# ─────────────────────────────────────────
+
+# Create SSH key (only if this PC doesn't already have one)
+	ssh-keygen -t ed25519 -C "gaurav.rockins@gmail.com"
+
+# press Enter then it will ask for a passphrase, Press Enter twice for no passphrase
+
+# Show PUBLIC key
+	cat ~/.ssh/id_ed25519.pub
+
+# Add the displayed public key to:
+	https://github.com/settings/keys
+
+# Then test GitHub authentication and Type: yes when asked
+	ssh -T git@github.com
+
+    
+################################################################################################################## 
+
+
+    
+Maintainance - 
+
+	// revert git add .
+		
+		git restore --cached .
+
+	// revert git commit 
+		
+		git reset --soft HEAD~1
+    
+	// revert commit and add .
+		
+		git reset HEAD~1
+    
+	// I want to go back to Stage, where I had started working today (soft reset , wont modify local directory changes) 
+		
+		git reset HEAD~1
+		git push --force-with-lease
+    
+	// I want to go back to Stage, where I had started working today (hard reset) -
+		
+		git reset --hard HEAD~1
+		git push --force-with-lease    
+
+	// Monthly / occasional maintenance
+		
+		git fetch --prune && git gc
+
+	If you added very large files and want immediate removal -
+		
+		git reflog expire --expire=now --all 
+		git gc --prune=now
+
+	// Check repository health
+		
+		git fsck
+    
+
+
+

@@ -113,8 +113,7 @@
 		sudo dnf install mangohud goverlay lm_sensors
 	```
 	
-	CS2 Launch options - SDL_VIDEODRIVER=wayland SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY=1 LD_PRELOAD="" mangohud %command% -fullscreen
-
+	CS2 Launch options - SDL_VIDEO_DRIVER=wayland LD_PRELOAD="" mangohud %command%
 
 
 ## 8\. Clean

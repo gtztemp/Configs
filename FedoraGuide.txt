@@ -249,78 +249,23 @@
 	Once the download and dependency checks complete, initiate the offline upgrade:
 
 	```
-		sudo dnf offline reboot
+		sudo dnf system-upgrade reboot -y
 	```
 
-	After the upgrade, clean up offline upgrade data if necessary:
-
-	```
-		sudo dnf offline clean
-	```
 
 	**Important:** Replace `45` with the intended target release. Check Fedora's supported upgrade paths and release status before upgrading.
 
-## 14\. Clean Up Retired Packages
 
-	Install the retired-package cleanup utility:
-
-	```
-		sudo dnf install remove-retired-packages
-	```
-
-	Run it:
-
-	```
-		remove-retired-packages
-	```
-
-	Review its proposed removals carefully.
-
-## 15\. Find and Remove Duplicate Packages
-
-	List duplicate packages:
-
-	```
-		sudo dnf repoquery --duplicates
-	```
-
-	Remove duplicates:
-
-	```
-		sudo dnf remove --duplicates
-	```
-
-	Review the transaction before confirming.
-
-## 16\. Find Packages No Longer Available in Repositories
-
-	For packages from official repositories, the latest available version should normally be installed. Some installed packages may no longer exist in any enabled repository.
-
-	List extra packages:
-
-	```
-		sudo dnf list --extras
-	```
-
-	If you identify packages you no longer need, remove them with:
-
-	```
-		sudo dnf remove $(sudo dnf repoquery --extras --exclude=kernel,kernel-\*,kmod-\*)
-	```
-
-	Review the proposed transaction before confirming. Do not blindly remove packages simply because they appear as extras; they may be intentionally installed from third-party sources.
-
-## 17\. Remove Unneeded Dependencies
-
-	Remove packages that are no longer required by installed software:
+## 14\. Remove packages that are no longer required by installed software:
 
 	```
 		sudo dnf autoremove
 	```
 
 	Review the package list before proceeding.
+	
 
-## 18\. Disable Gnome Software from Startup Apps
+## 15\. Disable Gnome Software from Startup Apps
 
     Gnome software autostarts on boot, this takes at least 100MB of RAM upto 900MB, you can stop it from autostarting by:
     
